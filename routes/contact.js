@@ -23,14 +23,16 @@ contactRoutes.route("/contact").get(function (req, res) {
     });
 });
 
-// This section will help you get a single record by id
-contactRoutes.route("/record/:name").get(function (req, res) {
+contactRoutes.route("/contact/:name").get(function (req, res) {
   let db_connect = dbo.getDb();
-  let myquery = { name: ObjectId(req.params.id) };
-  db_connect.collection("records").findOne(myquery, function (err, result) {
-    if (err) throw err;
-    res.json(result);
-  });
+  let myquery = { name: req.params.name };
+  db_connect
+    .collection("contacts")
+    .find(myquery)
+    .toArray(function (err, result) {
+      if (err) throw err;
+      res.json(result);
+    });
 });
 
 // This section will help you create a new record.
