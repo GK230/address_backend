@@ -6,15 +6,9 @@ const dbo = require("../db/conn");
 
 const ObjectId = require("mongodb").ObjectId;
 
-contactRoutes.route("/contact").get(function (req, res) {
+contactRoutes.route("/contact").get(async function (req, res) {
   let db_connect = dbo.getDb("address");
-  db_connect
-    .collection("contacts")
-    .find({})
-    .toArray(function (err, result) {
-      if (err) throw err;
-      res.json(result);
-    });
+  await db_connect.collection("contacts").find({}).toArray();
 });
 
 contactRoutes.route("/contact/:name").get(function (req, res) {
@@ -49,9 +43,9 @@ contactRoutes.route("/contact/add").post(function (req, response) {
 //   let newvalues = {
 //     $set: {
 //       name: req.body.name,
-          // email: req.body.email,
-          // phone: req.body.phone,
-          // address: req.body.address,
+// email: req.body.email,
+// phone: req.body.phone,
+// address: req.body.address,
 //     },
 //   };
 //   db_connect
